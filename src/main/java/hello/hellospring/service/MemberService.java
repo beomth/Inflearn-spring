@@ -3,17 +3,26 @@ package hello.hellospring.service;
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 // Ctrl + Shift + T 해서 Test클래스 바로 만들 수 있음
+
+
 public class MemberService {
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository;
 
-    // 회원가입
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
+// 회원가입
+    @Transactional
     public Long join(Member member) {
         // 같은 이름이 있는 회원 X
         // Ctrl + Alt + V
@@ -45,3 +54,4 @@ public class MemberService {
         return memberRepository.findById(memberId);
     }
 }
+
